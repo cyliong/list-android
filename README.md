@@ -1,6 +1,8 @@
 # list-android
 This is a simple list mobile app (to-do list, tasks, shopping list, recipes, and the like) showcasing the implementation of CRUD operations, written in Kotlin for the Android platform.
 
+Together with [list-ios](https://github.com/cyliong/list-ios), they present a way to develop cross-platform native mobile apps with similar patterns and libraries.
+
 ## Features
 - Display a list of items (`RecyclerView`, `RealmResults`)
 - Input dialog for adding and editing items (Anko Commons and Anko Layouts)
