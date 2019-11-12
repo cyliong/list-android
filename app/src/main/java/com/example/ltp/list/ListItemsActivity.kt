@@ -10,20 +10,20 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ltp.list.model.ListItem
+import io.realm.OrderedRealmCollection
 import io.realm.Realm
+import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_list_items.*
 import kotlinx.android.synthetic.main.content_list_items.*
 import kotlinx.android.synthetic.main.row_list_item.view.*
 import org.jetbrains.anko.*
-import org.jetbrains.anko.design.snackbar
 
 class ListItemsActivity : AppCompatActivity() {
 
     private lateinit var realm: Realm
     private lateinit var listItems: RealmResults<ListItem>
-    private lateinit var listItemsAdapter: ListItemsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +35,10 @@ class ListItemsActivity : AppCompatActivity() {
 
         val linearLayoutManager = LinearLayoutManager(this)
         val dividerItemDecoration = DividerItemDecoration(recycler_view.context, linearLayoutManager.orientation)
-        listItemsAdapter = ListItemsAdapter(listItems)
 
         recycler_view.apply {
             layoutManager = linearLayoutManager
-            adapter = listItemsAdapter
+            adapter = ListItemsAdapter(listItems)
         }.addItemDecoration(dividerItemDecoration)
 
         setSwipeToDeleteHandler()
@@ -52,15 +51,13 @@ class ListItemsActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private inner class ListItemsAdapter(private val items: RealmResults<ListItem>) :
-        RecyclerView.Adapter<ListItemsAdapter.ViewHolder>() {
+    private inner class ListItemsAdapter(private val items: OrderedRealmCollection<ListItem>) :
+        RealmRecyclerViewAdapter<ListItem, ListItemsAdapter.ViewHolder>(items, true) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_list_item, parent, false))
         }
-
-        override fun getItemCount() = items.size
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.view.text_view_list_item.text = items[position]?.title
@@ -107,14 +104,10 @@ class ListItemsActivity : AppCompatActivity() {
                             if (isNew) {
                                 val listItem = ListItem(title = itemTitle)
                                 realm.insert(listItem)
-                                listItemsAdapter.notifyItemInserted(listItems.size - 1)
-                                recycler_view.snackbar("Item added successfully.")
                             } else {
                                 listItems[position]?.run {
                                     title = itemTitle
                                     realm.insertOrUpdate(this)
-                                    listItemsAdapter.notifyItemChanged(position)
-                                    recycler_view.snackbar("Item updated successfully.")
                                 }
                             }
                         }
@@ -139,10 +132,7 @@ class ListItemsActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 realm.executeTransaction {
-                    listItems[viewHolder.adapterPosition]?.run {
-                        deleteFromRealm()
-                        listItemsAdapter.notifyDataSetChanged()
-                    }
+                    listItems[viewHolder.adapterPosition]?.deleteFromRealm()
                 }
             }
 
