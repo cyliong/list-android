@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ltp.list.model.ListItem
+import com.example.ltp.list.viewmodel.ListItemsViewModel
 import io.realm.OrderedRealmCollection
-import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
-import io.realm.RealmResults
-import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_list_items.*
 import kotlinx.android.synthetic.main.content_list_items.*
 import kotlinx.android.synthetic.main.row_list_item.view.*
@@ -22,23 +20,19 @@ import org.jetbrains.anko.*
 
 class ListItemsActivity : AppCompatActivity() {
 
-    private lateinit var realm: Realm
-    private lateinit var listItems: RealmResults<ListItem>
+    private val viewModel = ListItemsViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_items)
         setSupportActionBar(toolbar)
 
-        realm = Realm.getDefaultInstance()
-        listItems = realm.where<ListItem>().findAll()
-
         val linearLayoutManager = LinearLayoutManager(this)
         val dividerItemDecoration = DividerItemDecoration(recycler_view.context, linearLayoutManager.orientation)
 
         recycler_view.apply {
             layoutManager = linearLayoutManager
-            adapter = ListItemsAdapter(listItems)
+            adapter = ListItemsAdapter(viewModel.listItems)
         }.addItemDecoration(dividerItemDecoration)
 
         setSwipeToDeleteHandler()
@@ -47,7 +41,7 @@ class ListItemsActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        realm.close()
+        viewModel.finalize()
         super.onDestroy()
     }
 
@@ -86,7 +80,7 @@ class ListItemsActivity : AppCompatActivity() {
                         if (isNew) {
                             hint = "Enter a new item"
                         } else {
-                            listItems[position]?.run {
+                            viewModel.listItems[position]?.run {
                                 append(title)
                             }
                         }
@@ -100,16 +94,10 @@ class ListItemsActivity : AppCompatActivity() {
                             return@positiveButton
                         }
 
-                        realm.executeTransaction { realm ->
-                            if (isNew) {
-                                val listItem = ListItem(title = itemTitle)
-                                realm.insert(listItem)
-                            } else {
-                                listItems[position]?.run {
-                                    title = itemTitle
-                                    realm.insertOrUpdate(this)
-                                }
-                            }
+                        if (isNew) {
+                            viewModel.addItem(itemTitle)
+                        } else {
+                            viewModel.updateItem(position, itemTitle)
                         }
                     }
                     negativeButton("Cancel") {}
@@ -131,9 +119,7 @@ class ListItemsActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                realm.executeTransaction {
-                    listItems[viewHolder.adapterPosition]?.deleteFromRealm()
-                }
+                viewModel.deleteItem(viewHolder.adapterPosition)
             }
 
         }
