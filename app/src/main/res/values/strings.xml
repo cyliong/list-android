@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">List</string>
+    <string name="title_activity_item">Edit Item</string>
+    <string name="action_save">Save</string>
+    <string name="edit_text_item_title_hint">Enter an item</string>
 </resources>

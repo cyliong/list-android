@@ -7,34 +7,19 @@ import io.realm.kotlin.where
 
 class ListItemsViewModel {
 
-    private val realm = Realm.getDefaultInstance()
-
     val listItems: RealmResults<ListItem>
+
+    private val realm = Realm.getDefaultInstance()
 
     init {
         listItems = realm.where<ListItem>().findAll()
     }
 
-    fun finalize() {
+    fun onDestroy() {
         realm.close()
     }
 
-    fun addItem(title: String) {
-        realm.executeTransaction { realm ->
-            realm.insert(ListItem(title = title))
-        }
-    }
-
-    fun updateItem(index: Int, title: String) {
-        realm.executeTransaction { realm ->
-            listItems[index]?.run {
-                this.title = title
-                realm.insertOrUpdate(this)
-            }
-        }
-    }
-
-    fun deleteItem(index: Int) {
+    fun onDelete(index: Int) {
         realm.executeTransaction {
             listItems[index]?.deleteFromRealm()
         }

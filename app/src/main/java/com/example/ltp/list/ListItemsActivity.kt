@@ -37,11 +37,11 @@ class ListItemsActivity : AppCompatActivity() {
 
         setSwipeToDeleteHandler()
 
-        fab.setOnClickListener { showInputDialog() }
+        fab.setOnClickListener { startActivity<ItemActivity>() }
     }
 
     override fun onDestroy() {
-        viewModel.finalize()
+        viewModel.onDestroy()
         super.onDestroy()
     }
 
@@ -60,50 +60,15 @@ class ListItemsActivity : AppCompatActivity() {
         inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
             init {
-                view.setOnClickListener { showInputDialog(adapterPosition) }
+                view.setOnClickListener {
+                    startActivity<ItemActivity>(
+                        ItemActivity.EXTRA_ITEM_ID to items[adapterPosition].id
+                    )
+                }
             }
 
         }
 
-    }
-
-    private fun showInputDialog(position: Int = -1) {
-        val isNew = position == -1
-
-        alert {
-            title = if (isNew) "New Item" else "Edit Item"
-            customView {
-                verticalLayout {
-                    padding = dip(20)
-
-                    val editText = editText {
-                        if (isNew) {
-                            hint = "Enter a new item"
-                        } else {
-                            viewModel.listItems[position]?.run {
-                                append(title)
-                            }
-                        }
-                    }
-
-                    positiveButton("Save") {
-                        val itemTitle = editText.text.toString()
-
-                        if (itemTitle.isEmpty()) {
-                            showInputDialog(position)
-                            return@positiveButton
-                        }
-
-                        if (isNew) {
-                            viewModel.addItem(itemTitle)
-                        } else {
-                            viewModel.updateItem(position, itemTitle)
-                        }
-                    }
-                    negativeButton("Cancel") {}
-                }
-            }
-        }.show()
     }
 
     private fun setSwipeToDeleteHandler() {
@@ -119,7 +84,7 @@ class ListItemsActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                viewModel.deleteItem(viewHolder.adapterPosition)
+                viewModel.onDelete(viewHolder.adapterPosition)
             }
 
         }
