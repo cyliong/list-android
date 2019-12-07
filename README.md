@@ -1,11 +1,12 @@
 # list-android
-This is a simple list mobile app (to-do list, tasks, shopping list, recipes, and the like) showcasing the implementation of CRUD operations, written in Kotlin for the Android platform.
+This is a simple list mobile app (to-do list, tasks, shopping list, recipes, and the like) showcasing the implementation of CRUD operations, MVVM pattern and reactive programming, written in Kotlin for the Android platform.
 
-Together with [list-ios](https://github.com/cyliong/list-ios), they present a way to develop cross-platform native mobile apps with similar patterns and libraries.
+Together with [list-ios](https://github.com/cyliong/list-ios), they present a way to develop cross-platform native mobile apps with similar patterns and libraries. In addition, BDD-style test automation for both the Android and iOS list apps is showcased at [cross-platform-bdd](https://github.com/cyliong/cross-platform-bdd).
 
 ## Features
 - Display a list of items (`RecyclerView`, `RealmResults`)
-- Input dialog for adding and editing items (Anko Commons and Anko Layouts)
+- Navigate to a page to add or edit items (Anko Commons, intent, extra, `EditText`)
+- Reactively enable or disable save button upon text changes (`RxBinding`, `RxJava`)
 - Swipe to delete items (`ItemTouchHelper`)
 - Store items in database using data model (`RealmObject`)
 
@@ -14,6 +15,8 @@ Together with [list-ios](https://github.com/cyliong/list-ios), they present a wa
 - kapt
 - Anko
 - Realm Database
+- RxBinding
+- RxJava
 
 ## Requirements
 - Android Studio version 3.4 or higher
