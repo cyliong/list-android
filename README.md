@@ -13,7 +13,6 @@ Together with [list-ios](https://github.com/cyliong/list-ios), they present a wa
 ## Dependencies
 - Kotlin Android Extensions
 - kapt
-- Anko
 - Realm Database
 - RxBinding
 - RxJava

@@ -16,7 +16,6 @@ import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_list_items.*
 import kotlinx.android.synthetic.main.content_list_items.*
 import kotlinx.android.synthetic.main.row_list_item.view.*
-import org.jetbrains.anko.*
 
 class ListItemsActivity : AppCompatActivity() {
 
@@ -37,7 +36,9 @@ class ListItemsActivity : AppCompatActivity() {
 
         setSwipeToDeleteHandler()
 
-        fab.setOnClickListener { startActivity<ItemActivity>() }
+        fab.setOnClickListener {
+            startActivity(ItemActivity.newIntent(this))
+        }
     }
 
     override fun onDestroy() {
@@ -61,9 +62,7 @@ class ListItemsActivity : AppCompatActivity() {
 
             init {
                 view.setOnClickListener {
-                    startActivity<ItemActivity>(
-                        ItemActivity.EXTRA_ITEM_ID to items[adapterPosition].id
-                    )
+                    startActivity(ItemActivity.newIntent(this@ListItemsActivity, items[adapterPosition].id))
                 }
             }
 

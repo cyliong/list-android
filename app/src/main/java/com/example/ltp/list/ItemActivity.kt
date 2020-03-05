@@ -1,5 +1,7 @@
 package com.example.ltp.list
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +13,8 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.content_item.*
 import java.util.concurrent.TimeUnit
+
+private const val EXTRA_ITEM_ID = "com.example.ltp.list.EXTRA_ITEM_ID"
 
 class ItemActivity : AppCompatActivity() {
 
@@ -71,7 +75,11 @@ class ItemActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_ITEM_ID = "item_id"
+        fun newIntent(context: Context, itemId: String? = null): Intent {
+            return Intent(context, ItemActivity::class.java).apply {
+                itemId?.let { putExtra(EXTRA_ITEM_ID, it) }
+            }
+        }
     }
 
 }
