@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ltp.list.databinding.ActivityItemBinding
 import com.example.ltp.list.viewmodel.ItemViewModel
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_item.*
-import kotlinx.android.synthetic.main.content_item.*
 import java.util.concurrent.TimeUnit
 
 private const val EXTRA_ITEM_ID = "com.example.ltp.list.EXTRA_ITEM_ID"
@@ -21,24 +20,28 @@ class ItemActivity : AppCompatActivity() {
     private val disposables = CompositeDisposable()
 
     private lateinit var viewModel: ItemViewModel
+    private lateinit var binding: ActivityItemBinding
+
     private var saveItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item)
-        setSupportActionBar(toolbar)
+        binding = ActivityItemBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val editTextItemTitle = binding.contentItem.editTextItemTitle
         val itemId = intent.getStringExtra(EXTRA_ITEM_ID)
         viewModel = ItemViewModel(itemId)
         if (itemId == null) {
             title = "New Item"
         } else {
-            edit_text_item_title.append(viewModel.title)
+            editTextItemTitle.append(viewModel.title)
         }
 
-        edit_text_item_title.run {
+        editTextItemTitle.run {
             requestFocus()
 
             val disposable = textChanges()
@@ -65,7 +68,7 @@ class ItemActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_save -> {
-            viewModel.onSave(edit_text_item_title.text.toString())
+            viewModel.onSave(binding.contentItem.editTextItemTitle.text.toString())
             finish()
             true
         }

@@ -2,41 +2,46 @@ package com.example.ltp.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ltp.list.databinding.ActivityListItemsBinding
+import com.example.ltp.list.databinding.RowListItemBinding
 import com.example.ltp.list.model.ListItem
 import com.example.ltp.list.viewmodel.ListItemsViewModel
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import kotlinx.android.synthetic.main.activity_list_items.*
-import kotlinx.android.synthetic.main.content_list_items.*
-import kotlinx.android.synthetic.main.row_list_item.view.*
 
 class ListItemsActivity : AppCompatActivity() {
 
     private val viewModel = ListItemsViewModel()
 
+    private lateinit var binding: ActivityListItemsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_items)
-        setSupportActionBar(toolbar)
+        binding = ActivityListItemsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
+        val recyclerView = binding.contentListItems.recyclerView
         val linearLayoutManager = LinearLayoutManager(this)
-        val dividerItemDecoration = DividerItemDecoration(recycler_view.context, linearLayoutManager.orientation)
+        val dividerItemDecoration = DividerItemDecoration(
+            recyclerView.context,
+            linearLayoutManager.orientation
+        )
 
-        recycler_view.apply {
+        recyclerView.apply {
             layoutManager = linearLayoutManager
             adapter = ListItemsAdapter(viewModel.listItems)
         }.addItemDecoration(dividerItemDecoration)
 
         setSwipeToDeleteHandler()
 
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             startActivity(ItemActivity.newIntent(this))
         }
     }
@@ -50,20 +55,34 @@ class ListItemsActivity : AppCompatActivity() {
         RealmRecyclerViewAdapter<ListItem, ListItemsAdapter.ViewHolder>(items, true) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.row_list_item, parent, false))
+            val itemBinding = RowListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return ViewHolder(itemBinding)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.view.text_view_list_item.text = items[position]?.title
+            holder.bind(items[position])
         }
 
-        inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        inner class ViewHolder(private val itemBinding: RowListItemBinding) :
+            RecyclerView.ViewHolder(itemBinding.root) {
 
             init {
-                view.setOnClickListener {
-                    startActivity(ItemActivity.newIntent(this@ListItemsActivity, items[adapterPosition].id))
+                itemBinding.root.setOnClickListener {
+                    startActivity(
+                        ItemActivity.newIntent(
+                            this@ListItemsActivity,
+                            items[adapterPosition].id
+                        )
+                    )
                 }
+            }
+
+            fun bind(item: ListItem) {
+                itemBinding.textViewListItem.text = item.title
             }
 
         }
@@ -88,7 +107,8 @@ class ListItemsActivity : AppCompatActivity() {
 
         }
 
-        ItemTouchHelper(swipeToDeleteHandler).attachToRecyclerView(recycler_view)
+        ItemTouchHelper(swipeToDeleteHandler)
+            .attachToRecyclerView(binding.contentListItems.recyclerView)
     }
 
 }

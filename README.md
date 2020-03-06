@@ -5,7 +5,7 @@ Together with [list-ios](https://github.com/cyliong/list-ios), they present a wa
 
 ## Features
 - Display a list of items (`RecyclerView`, `RealmResults`)
-- Navigate to a page to add or edit items (Anko Commons, intent, extra, `EditText`)
+- Navigate to a page to add or edit items (intent, extra, `EditText`)
 - Reactively enable or disable save button upon text changes (`RxBinding`, `RxJava`)
 - Swipe to delete items (`ItemTouchHelper`)
 - Store items in database using data model (`RealmObject`)
@@ -18,6 +18,6 @@ Together with [list-ios](https://github.com/cyliong/list-ios), they present a wa
 - RxJava
 
 ## Requirements
-- Android Studio version 3.4 or higher
+- Android Studio version 3.6 or higher
 - Android 4.4 (API level 19) or higher
 - Kotlin 1.3 or higher

@@ -20,6 +20,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_item" />
+    <include
+            android:id="@+id/content_item"
+            layout="@layout/content_item" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
