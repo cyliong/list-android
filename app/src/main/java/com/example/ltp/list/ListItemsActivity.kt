@@ -12,14 +12,25 @@ import com.example.ltp.list.databinding.ActivityListItemsBinding
 import com.example.ltp.list.databinding.RowListItemBinding
 import com.example.ltp.list.model.ListItem
 import com.example.ltp.list.viewmodel.ListItemsViewModel
+import com.google.android.material.snackbar.Snackbar
 import io.realm.OrderedRealmCollection
+import io.realm.OrderedRealmCollectionChangeListener
 import io.realm.RealmRecyclerViewAdapter
+import io.realm.RealmResults
 
 class ListItemsActivity : AppCompatActivity() {
 
     private val viewModel = ListItemsViewModel()
 
     private lateinit var binding: ActivityListItemsBinding
+
+    private val changeListener = OrderedRealmCollectionChangeListener<RealmResults<ListItem>> {
+            _, changeSet ->
+        val deletions = changeSet.deletionRanges
+        if (deletions.isNotEmpty()) {
+            Snackbar.make(binding.root, "Item deleted.", Snackbar.LENGTH_LONG).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +55,12 @@ class ListItemsActivity : AppCompatActivity() {
         binding.fab.setOnClickListener {
             startActivity(ItemActivity.newIntent(this))
         }
+
+        viewModel.listItems.addChangeListener(changeListener)
     }
 
     override fun onDestroy() {
+        viewModel.listItems.removeChangeListener(changeListener)
         viewModel.onDestroy()
         super.onDestroy()
     }
