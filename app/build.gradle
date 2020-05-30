@@ -23,6 +23,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     viewBinding {
         enabled = true
     }
@@ -38,5 +45,5 @@ dependencies {
 
     implementation 'io.realm:android-adapters:4.0.0'
 
-    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 }

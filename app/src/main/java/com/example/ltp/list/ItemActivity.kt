@@ -8,9 +8,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ltp.list.databinding.ActivityItemBinding
 import com.example.ltp.list.viewmodel.ItemViewModel
-import com.jakewharton.rxbinding3.widget.textChanges
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import com.jakewharton.rxbinding4.widget.textChanges
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
 private const val EXTRA_ITEM_ID = "com.example.ltp.list.EXTRA_ITEM_ID"
