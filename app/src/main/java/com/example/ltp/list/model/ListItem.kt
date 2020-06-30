@@ -7,7 +7,7 @@ import java.util.*
 open class ListItem(
 
     @PrimaryKey var id: String = UUID.randomUUID().toString(),
-
-    var title: String = ""
+    var title: String = "",
+    var created: Date = Date()
 
 ) : RealmObject()
