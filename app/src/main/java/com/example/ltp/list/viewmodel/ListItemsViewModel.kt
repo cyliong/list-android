@@ -12,7 +12,7 @@ class ListItemsViewModel {
     private val realm = Realm.getDefaultInstance()
 
     init {
-        listItems = realm.where<ListItem>().findAll()
+        listItems = realm.where<ListItem>().sort("created").findAll()
     }
 
     fun onDestroy() {
