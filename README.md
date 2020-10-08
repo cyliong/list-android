@@ -30,6 +30,6 @@ may refer to the [list2-android](https://github.com/cyliong/list2-android) proje
 - Material Components
 
 ## Requirements
-- Android Studio version 4.0.1 or higher
+- Android Studio version 4.0.2 or higher
 - Android 4.4 (API level 19) or higher
 - Kotlin 1.3 or higher
