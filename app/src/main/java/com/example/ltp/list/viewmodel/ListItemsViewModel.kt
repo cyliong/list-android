@@ -20,8 +20,14 @@ class ListItemsViewModel {
     }
 
     fun onDelete(index: Int) {
-        realm.executeTransaction {
-            listItems[index]?.deleteFromRealm()
+        listItems[index]?.id?.let { id ->
+            realm.executeTransactionAsync { backgroundRealm ->
+                backgroundRealm
+                    .where<ListItem>()
+                    .equalTo("id", id)
+                    .findFirst()
+                    ?.deleteFromRealm()
+            }
         }
     }
 
