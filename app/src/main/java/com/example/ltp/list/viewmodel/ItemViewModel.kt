@@ -13,7 +13,7 @@ class ItemViewModel(private val id: String? = null) {
     private val item: ListItem?
 
     init {
-        item = id?.let { realm.where<ListItem>().equalTo("id", id).findFirst() }
+        item = getItem(realm)
     }
 
     fun onDestroy() {
@@ -21,13 +21,18 @@ class ItemViewModel(private val id: String? = null) {
     }
 
     fun onSave(title: String) {
-        realm.executeTransaction {
+        realm.executeTransactionAsync {
+            val item = getItem(it)
             if (item == null) {
-                realm.insert(ListItem(title = title))
+                it.insert(ListItem(title = title))
             } else {
                 item.title = title
             }
         }
+    }
+
+    private fun getItem(realm: Realm): ListItem? {
+        return id?.let { realm.where<ListItem>().equalTo("id", id).findFirst() }
     }
 
 }
