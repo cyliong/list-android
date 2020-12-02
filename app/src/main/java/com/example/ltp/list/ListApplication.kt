@@ -1,9 +1,9 @@
 package com.example.ltp.list
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import io.realm.Realm
 
-class ListApplication : Application() {
+class ListApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
