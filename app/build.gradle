@@ -16,6 +16,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -46,4 +47,6 @@ dependencies {
     implementation 'io.realm:android-adapters:4.0.0'
 
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
