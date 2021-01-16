@@ -22,6 +22,7 @@ may refer to the [list2-android](https://github.com/cyliong/list2-android) proje
 - Reactively enable or disable save button upon text changes (`RxBinding`, `RxJava`)
 - Swipe to delete items (`ItemTouchHelper`)
 - Store items in database using data model (`RealmObject`)
+- Database migration (`RealmConfiguration`, `RealmMigration`)
 
 ## Dependencies
 - Realm Database
