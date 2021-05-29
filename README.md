@@ -40,4 +40,4 @@ the [list2-android](https://github.com/cyliong/list2-android) project.*
 ## Requirements
 - Android Studio version 4.2.1 or higher
 - Android 4.4 (API level 19) or higher
-- Kotlin 1.4 or higher
+- Kotlin 1.5 or higher
