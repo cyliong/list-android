@@ -2,6 +2,7 @@ package com.example.ltp.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -63,6 +64,11 @@ class ListItemsActivity : AppCompatActivity() {
         viewModel.listItems.removeChangeListener(changeListener)
         viewModel.onDestroy()
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_list_items, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     private inner class ListItemsAdapter(private val items: OrderedRealmCollection<ListItem>) :
