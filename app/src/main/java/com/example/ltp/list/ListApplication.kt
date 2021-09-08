@@ -1,8 +1,13 @@
 package com.example.ltp.list
 
 import androidx.multidex.MultiDexApplication
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
 import io.realm.Realm
 import io.realm.RealmConfiguration
+
+const val ENGINE_ID = "list.engine"
 
 class ListApplication : MultiDexApplication() {
 
@@ -24,6 +29,12 @@ class ListApplication : MultiDexApplication() {
             }
             .build()
         Realm.setDefaultConfiguration(config)
+
+        val flutterEngine = FlutterEngine(this)
+        flutterEngine.dartExecutor.executeDartEntrypoint(
+            DartExecutor.DartEntrypoint.createDefault()
+        )
+        FlutterEngineCache.getInstance().put(ENGINE_ID, flutterEngine)
     }
 
 }
