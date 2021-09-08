@@ -75,7 +75,9 @@ class ListItemsActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_about -> {
-            startActivity(FlutterActivity.createDefaultIntent(this))
+            startActivity(
+                FlutterActivity.withCachedEngine(ENGINE_ID).build(this)
+            )
             true
         }
         else -> {
