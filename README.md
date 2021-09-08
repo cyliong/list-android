@@ -11,15 +11,23 @@ with similar patterns and libraries, including:
 - MVVM pattern
 - Reactive programming
 - Material Components
-- Realm 
+- Realm
+- Flutter module
 
 In addition, BDD-style test automation 
 for both the Android and iOS list apps is showcased at 
 [cross-platform-bdd](https://github.com/cyliong/cross-platform-bdd).
 
-*If you are looking for a more Android-specific solution 
+*A Flutter module, [list-module](https://github.com/cyliong/list-module)
+is to be integrated into this project to share code written in Dart
+across platforms.*
+
+*However, if you are looking for a pure native solution, refer to 
+the [native](https://github.com/cyliong/list-android/tree/native) branch.*
+
+*Alternatively, if you are looking for a more Android-specific solution 
 without concerning too much about reusing similar patterns 
-and libraries across platforms, may refer to 
+and libraries across platforms, refer to 
 the [list2-android](https://github.com/cyliong/list2-android) project.*
 
 ## Features
@@ -36,8 +44,20 @@ the [list2-android](https://github.com/cyliong/list2-android) project.*
 - RxBinding
 - RxJava
 - Material Components
+- Flutter
 
 ## Requirements
-- Android Studio Arctic Fox | 2020.3.1 or newer
+- Android Studio Arctic Fox | 2020.3.1 Patch 2 or newer
 - Android 4.4 (API level 19) or higher
 - Kotlin 1.5 or higher
+
+## Setup
+1. Download this project (list-android) and 
+   [list-module](https://github.com/cyliong/list-module) 
+   then place them in the same directory (e.g. `path/to`).
+2. Run the following to set up list-module:
+```
+$ cd path/to/list-module
+$ flutter pub get
+```
+3. Open list-android in Android Studio and run the app.
