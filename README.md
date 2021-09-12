@@ -22,7 +22,8 @@ for both the Android and iOS list apps is showcased at
 is to be integrated into this project to share code written in Dart
 across platforms.*
 
-*However, if you are looking for a pure native solution, refer to 
+*However, if you are looking for a pure native solution
+without the need to have a single codebase across platforms, refer to 
 the [native](https://github.com/cyliong/list-android/tree/native) branch.*
 
 *Alternatively, if you are looking for a more Android-specific solution 
@@ -54,10 +55,17 @@ the [list2-android](https://github.com/cyliong/list2-android) project.*
 ## Setup
 1. Download this project (list-android) and 
    [list-module](https://github.com/cyliong/list-module) 
-   then place them in the same directory (e.g. `path/to`).
+   then place them in the same directory (e.g. `path/to/`):
+```
+path/to/
+├── list-android/
+└── list-module/
+```
 2. Run the following to set up list-module:
 ```
-$ cd path/to/list-module
-$ flutter pub get
+cd path/to/list-module
+```
+```
+flutter pub get
 ```
 3. Open list-android in Android Studio and run the app.
