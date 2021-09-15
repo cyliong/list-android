@@ -39,6 +39,7 @@ the [list2-android](https://github.com/cyliong/list2-android) project.*
 - Swipe to delete items (`ItemTouchHelper`)
 - Store items in database using data model (`RealmObject`)
 - Database migration (`RealmConfiguration`, `RealmMigration`)
+- About page (Flutter module)
 
 ## Dependencies
 - Realm Database
