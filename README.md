@@ -51,7 +51,7 @@ the [list2-android](https://github.com/cyliong/list2-android) project.*
 ## Requirements
 - Android Studio Arctic Fox | 2020.3.1 Patch 3 or newer
 - Android 4.4 (API level 19) or higher
-- Kotlin 1.5 or higher
+- Kotlin 1.6 or higher
 
 ## Setup
 1. Download this project (list-android) and 
