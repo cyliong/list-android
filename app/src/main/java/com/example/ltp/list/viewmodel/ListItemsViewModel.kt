@@ -1,11 +1,12 @@
 package com.example.ltp.list.viewmodel
 
+import androidx.lifecycle.ViewModel
 import com.example.ltp.list.model.ListItem
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.kotlin.where
 
-class ListItemsViewModel {
+class ListItemsViewModel : ViewModel() {
 
     val listItems: RealmResults<ListItem>
 
