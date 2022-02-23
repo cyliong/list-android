@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.ltp.list.databinding.ActivityItemBinding
 import com.example.ltp.list.viewmodel.ItemViewModel
+import com.example.ltp.list.viewmodel.ItemViewModelFactory
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -34,7 +36,10 @@ class ItemActivity : AppCompatActivity() {
 
         val editTextItemTitle = binding.contentItem.editTextItemTitle
         val itemId = intent.getStringExtra(EXTRA_ITEM_ID)
-        viewModel = ItemViewModel(itemId)
+
+        val viewModelFactory = ItemViewModelFactory(itemId)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ItemViewModel::class.java)
+
         if (itemId == null) {
             title = "New Item"
         } else {

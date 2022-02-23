@@ -6,7 +6,7 @@ import com.example.ltp.list.model.ListItem
 import io.realm.Realm
 import io.realm.kotlin.where
 
-class ItemViewModel(private val id: String? = null) {
+class ItemViewModel(private val id: String? = null) : ViewModel() {
 
     val title: String?
         get() = item?.title
