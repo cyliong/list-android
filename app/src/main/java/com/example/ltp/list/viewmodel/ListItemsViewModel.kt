@@ -16,8 +16,9 @@ class ListItemsViewModel : ViewModel() {
         listItems = realm.where<ListItem>().sort("created").findAll()
     }
 
-    fun onDestroy() {
+    override fun onCleared() {
         realm.close()
+        super.onCleared()
     }
 
     fun onDelete(index: Int) {

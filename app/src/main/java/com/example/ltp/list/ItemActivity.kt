@@ -61,7 +61,6 @@ class ItemActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         disposables.clear()
-        viewModel.onDestroy()
         super.onDestroy()
     }
 

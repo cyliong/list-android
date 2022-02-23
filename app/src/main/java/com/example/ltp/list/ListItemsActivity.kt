@@ -66,7 +66,6 @@ class ListItemsActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         viewModel.listItems.removeChangeListener(changeListener)
-        viewModel.onDestroy()
         super.onDestroy()
     }
 

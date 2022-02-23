@@ -18,8 +18,9 @@ class ItemViewModel(private val id: String? = null) : ViewModel() {
         item = getItem(realm)
     }
 
-    fun onDestroy() {
+    override fun onCleared() {
         realm.close()
+        super.onCleared()
     }
 
     fun onSave(title: String) {
