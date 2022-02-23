@@ -1,5 +1,7 @@
 package com.example.ltp.list.viewmodel
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.ltp.list.model.ListItem
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -33,6 +35,17 @@ class ItemViewModel(private val id: String? = null) {
 
     private fun getItem(realm: Realm): ListItem? {
         return id?.let { realm.where<ListItem>().equalTo("id", id).findFirst() }
+    }
+
+}
+
+class ItemViewModelFactory (private val id: String?) : ViewModelProvider.Factory {
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ItemViewModel::class.java)) {
+            return ItemViewModel(id) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 
 }
