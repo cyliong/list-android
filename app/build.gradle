@@ -43,6 +43,8 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
 
+    implementation 'androidx.activity:activity-ktx:1.4.0'
+
     implementation 'io.realm:android-adapters:4.0.0'
 
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
