@@ -43,6 +43,7 @@ class ItemViewModelFactory (private val id: String?) : ViewModelProvider.Factory
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ItemViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
             return ItemViewModel(id) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
