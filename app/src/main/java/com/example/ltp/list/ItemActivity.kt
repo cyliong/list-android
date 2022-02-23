@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.ltp.list.databinding.ActivityItemBinding
 import com.example.ltp.list.viewmodel.ItemViewModel
 import com.example.ltp.list.viewmodel.ItemViewModelFactory
@@ -19,9 +19,11 @@ private const val EXTRA_ITEM_ID = "com.example.ltp.list.EXTRA_ITEM_ID"
 
 class ItemActivity : AppCompatActivity() {
 
+    private lateinit var viewModelFactory: ItemViewModelFactory
+    private val viewModel: ItemViewModel by viewModels { viewModelFactory }
+
     private val disposables = CompositeDisposable()
 
-    private lateinit var viewModel: ItemViewModel
     private lateinit var binding: ActivityItemBinding
 
     private var saveItem: MenuItem? = null
@@ -37,8 +39,7 @@ class ItemActivity : AppCompatActivity() {
         val editTextItemTitle = binding.contentItem.editTextItemTitle
         val itemId = intent.getStringExtra(EXTRA_ITEM_ID)
 
-        val viewModelFactory = ItemViewModelFactory(itemId)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ItemViewModel::class.java)
+        viewModelFactory = ItemViewModelFactory(itemId)
 
         if (itemId == null) {
             title = "New Item"

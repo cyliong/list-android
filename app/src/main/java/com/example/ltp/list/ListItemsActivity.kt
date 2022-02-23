@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +24,8 @@ import io.realm.RealmResults
 
 class ListItemsActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: ListItemsViewModel
+    private val viewModel: ListItemsViewModel by viewModels()
+
     private lateinit var binding: ActivityListItemsBinding
 
     private val changeListener = OrderedRealmCollectionChangeListener<RealmResults<ListItem>> {
@@ -40,8 +41,6 @@ class ListItemsActivity : AppCompatActivity() {
         binding = ActivityListItemsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
-        viewModel = ViewModelProvider(this).get(ListItemsViewModel::class.java)
 
         val recyclerView = binding.contentListItems.recyclerView
         val linearLayoutManager = LinearLayoutManager(this)
