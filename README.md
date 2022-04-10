@@ -49,7 +49,7 @@ the [list2-android](https://github.com/cyliong/list2-android) project.*
 - Flutter
 
 ## Requirements
-- Android Studio Bumblebee | 2021.1.1 Patch 2 or newer
+- Android Studio Bumblebee | 2021.1.1 Patch 3 or newer
 - Android 4.4 (API level 19) or higher
 - Kotlin 1.6 or higher
 
